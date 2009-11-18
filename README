@@ -1,0 +1,43 @@
+Cholesterolized
+---------------
+
+This is a sample cakephp project to demonstrate cholesterol 
+plugin (http://github.com/rchavik/cholesterol).
+
+- Tested cakephp 1.3 HEAD
+- jQuery UI - http://ui.jquery.com
+- jqgrid - http://www.trirand.com/blog/ (Tested with 3.5.3)
+
+Installation
+------------
+
+1. Adjust value of CAKE_CORE_INCLUDE_PATH in APP/webroot/index.php to 
+   your cakephp install
+
+2. You might need to adjust APP/.htaccess and APP/webroot/.htaccess accordingly
+
+3. Download, extract jquery and place it in APP/webroot
+   Copy or symlink the 'js' directory to APP/webroot/js/jquery
+   Copy or symlink the 'css/<themeName>' directory to APP/webroot/css/jquery
+
+
+4. Download, extract jqGrid and place it in APP/webroot
+   Copy or symlink the 'js' directory to APP/webroot/js/jqgrid
+   Copy or symlink the 'css' directory to APP/webroot/css/jqgrid
+
+
+5. If you use a different path for jquery or jqgrid, adjust the layout file:
+   APP/views/layouts/default.ctp
+
+6. Extract or clone cholesterol from github and place it in APP/plugins
+
+7. Create demo schema and load sample data
+
+      cake schema create
+      cake sample_data load
+
+8. Start testing.  If I don't screw up, you should be able to view two grids
+   with different options applied.
+
+Good luck and have fun,
+-- rchavik
