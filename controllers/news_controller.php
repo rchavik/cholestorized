@@ -15,7 +15,7 @@ class NewsController extends AppController {
 				'News.created', 'News.modified', 'User.login'
 				)
 			)
-
 		);
 	}
+
 }

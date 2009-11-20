@@ -23,6 +23,7 @@ echo $jqgrid->script($gridId, array(
 
 <p />
 
+<div style='width: 40%; float: left;'>
 <?php
 
 // construct second grid with some addition options
@@ -85,3 +86,43 @@ echo $jqgrid->script($gridId, array(
 //	'loadComplete' => '<script>function() { console.log("grid #' . $gridId . ' loaded."); }</script>',
 	)
 );
+
+?>
+</div>
+
+<div style='float: left; width: 60%; clear: right;'>
+<h3>Easily construct jqGrid's HTML element and javascript initialization block using Jqgrid helper</h3>
+<pre>
+<code>
+echo $jqgrid->grid($gridId, array(
+	'modelName' => 'News',
+	'exportToExcel' => true, 
+	'filterToolbar' => true,
+	'filterMode' => 'like', // valid values are 'like'|'exact'
+	'exportOptions' => array(
+		'type' => 'csv',
+		'filename' => 'news.csv',
+		)
+	)
+);
+echo $jqgrid->script($gridId, array('url' => 'news/get_news.json'));
+</code>
+</pre>
+
+<h3>Handle queries/filtering/searching from the grid and produce json response</h3>
+
+<pre><code>
+	function get_news() {
+		$this->Jqgrid->find('News', array(
+			'contain' => array('User.login'),
+			'recursive' => 0,
+			'fields' => array(
+				'News.id', 'News.title', 'News.body', 
+				'News.created', 'News.modified', 'User.login'
+				)
+			)
+		);
+	}
+</code></pre>
+
+</div>

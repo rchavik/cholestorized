@@ -44,7 +44,7 @@
 		echo $scripts_for_layout;
 	?>
 </head>
-<body>
+<body style='font-size: 90%'>
 	<div id="container">
 		<div id="header">
 			<h1><?php echo $html->link(__('CakePHP: the rapid development php framework', true), 'http://cakephp.org'); ?></h1>
