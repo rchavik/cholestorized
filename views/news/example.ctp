@@ -1,6 +1,26 @@
-<?php
-// vim: set ts=4 sts=4 sw=4 si noet:
+<?php // vim: set ts=4 sts=4 sw=4 si noet: ?>
 
+<h1>Simple grid example</h1>
+<div style='float: left; width: 100%;'>
+
+	<div id=example1 style='float: left; padding: 10px;'>
+	<pre><code>&lt;?php
+// create a basic placeholder elements for jqgrid
+echo $jqgrid->grid('news');
+
+// since modelName is not specified, it will assume that the id is
+// is a model class, and converted using Inflector::classify
+echo $jqgrid->script('news', array(
+    'width' => 600,
+    'url' => 'news/get_news.json', // points to action using the Jqgrid 
+                                   // component (with json extension)
+    )
+);
+?&gt;</code></pre>
+	</div>
+
+	<div id=example1_grid style='float: left; clear: right;'>
+<?php
 // construct first grid with minimal required options
 
 $gridId = 'news';
@@ -15,15 +35,71 @@ $url = Router::url(array(
 echo $jqgrid->grid($gridId);
 
 echo $jqgrid->script($gridId, array(
+	'width' => 600,
 	'url' => $url,
 	)
 );
 
 ?>
+	&nbsp;
+	</div>
+</div>
 
-<p />
+<h1>A more advanced example</h1>
 
-<div style='width: 40%; float: left;'>
+<div style='float: left; width: 100%'>
+
+	<div id=example2 style='float: left; padding: 10px;'>
+	<h2>Jqgrid Helper</h2>
+	<li>
+		You can easily construct jqGrid's HTML element and javascript initialization block using Jqgrid helper
+	</li>
+<pre>
+<code>&lt;?php
+// APP/view/news/example.ctp
+$gridId = 'a_second_grid';        // a different grid id, make sure
+                                  // to specify the primary modelName in the
+                                  // options of grid() call
+echo $jqgrid->grid($gridId, array(
+    'modelName' => 'News',        // specify the primary Model name
+    'filterToolbar' => true,      // use jqGrid's filterToolbar feature
+    'filterMode' => 'like',       // valid values are 'like'|'exact'
+    'exportOptions' => array(     // export configuration
+        'type' => 'csv',          // currently only 'csv' is supported
+        'filename' => 'news.csv', // if not specified, defaults to 'report.csv'
+        )
+    )
+);
+echo $jqgrid->script($gridId, array('url' => 'news/get_news.json'));
+?&gt;</code>
+</pre>
+
+	<h2>Jqgrid Component</h2>
+	<li>Handle queries/filtering/searching from the grid and produce json response</li>
+
+<pre><code>&lt;?php
+// APP/controllers/news_controller.php
+class NewsController extends AppController {
+    function get_news() {
+        $this->Jqgrid->find('News', array(
+            'contain' => array('User.login'), // containable support
+            'recursive' => 0,                 // recursive option
+            'fields' => array(                // specifying fields in query
+                'News.id', 'News.title',      // format: Modelname.fieldName
+                'News.body', 'News.created', 
+                'News.modified', 
+                'User.login'                  // support Model relationships
+                )
+            )
+        );
+    }
+}
+?&gt;</code></pre>
+
+	</div>
+
+	<div id=example2_grid style='float: left;'>
+
 <?php
 
 // construct second grid with some addition options
@@ -31,10 +107,10 @@ echo $jqgrid->script($gridId, array(
 $gridId = 'news2';
 
 echo $jqgrid->grid($gridId, array(
-	'modelName' => 'News',
+	'modelName' => 'News', 
 	'exportToExcel' => true, 
 	'filterToolbar' => true,
-	'filterMode' => 'like', // valid values are 'like'|'exact'
+	'filterMode' => 'like',
 	'exportOptions' => array(
 		'type' => 'csv',
 		'filename' => 'news.csv',
@@ -83,46 +159,9 @@ echo $jqgrid->script($gridId, array(
 				'label' => 'Created By',
 			),
 		),
-//	'loadComplete' => '<script>function() { console.log("grid #' . $gridId . ' loaded."); }</script>',
 	)
 );
 
 ?>
-</div>
-
-<div style='float: left; width: 60%; clear: right;'>
-<h3>Easily construct jqGrid's HTML element and javascript initialization block using Jqgrid helper</h3>
-<pre>
-<code>
-echo $jqgrid->grid($gridId, array(
-	'modelName' => 'News',
-	'exportToExcel' => true, 
-	'filterToolbar' => true,
-	'filterMode' => 'like', // valid values are 'like'|'exact'
-	'exportOptions' => array(
-		'type' => 'csv',
-		'filename' => 'news.csv',
-		)
-	)
-);
-echo $jqgrid->script($gridId, array('url' => 'news/get_news.json'));
-</code>
-</pre>
-
-<h3>Handle queries/filtering/searching from the grid and produce json response</h3>
-
-<pre><code>
-	function get_news() {
-		$this->Jqgrid->find('News', array(
-			'contain' => array('User.login'),
-			'recursive' => 0,
-			'fields' => array(
-				'News.id', 'News.title', 'News.body', 
-				'News.created', 'News.modified', 'User.login'
-				)
-			)
-		);
-	}
-</code></pre>
-
+	</div>
 </div>

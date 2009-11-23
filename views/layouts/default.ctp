@@ -49,7 +49,7 @@
 		<div id="header">
 			<h1><?php echo $html->link(__('CakePHP: the rapid development php framework', true), 'http://cakephp.org'); ?></h1>
 		</div>
-		<div id="content">
+		<div id="content" style="width: 100%">
 
 			<?php $session->flash(); ?>
 
@@ -67,5 +67,15 @@
 		</div>
 	</div>
 	<?php echo $cakeDebug; ?>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-179760-1");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
 </body>
 </html>
