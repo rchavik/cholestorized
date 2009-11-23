@@ -1,0 +1,3 @@
+[submodule "plugins/cholesterol"]
+	path = plugins/cholesterol
+	url = git://github.com/rchavik/cholesterol.git
